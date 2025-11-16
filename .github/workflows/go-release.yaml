@@ -1,0 +1,31 @@
+name: go-release
+on:
+  push:
+    tags:
+    - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write      
+    strategy:
+      matrix:
+        go_os: [linux]
+        go_arch: [amd64, arm64]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.24.10
+
+      - name: Run unit tests
+        run: go test -v
+
+      - name: Build Go binary ${{ matrix.go_os }} - ${{ matrix.go_arch }}
+        run: GOOS=${{ matrix.go_os }} GOARCH=${{ matrix.go_arch }} go build -ldflags="-s -w -X main.version=$(git describe --tags --always)" -gcflags="all=-trimpath=${PWD}"
