@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/josephrodriguez/gotter/internal/config"
@@ -12,7 +11,7 @@ func main() {
 	host := config.GetEnvStr("GOTTER_HOST", "0.0.0.0")
 	port := config.GetEnvInt("GOTTER_PORT", 8080)
 
-	fmt.Println("[Gotter] Starting service...")
+	log.Println("[Gotter] Starting service...")
 
 	if err := server.Start(host, port); err != nil {
 		log.Fatalf("[Gotter] Server failed: %v", err)
