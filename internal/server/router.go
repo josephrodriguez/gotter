@@ -8,6 +8,6 @@ import (
 
 func NewRouter() http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/webhooks/artifactory", webhooks.ArtifactoryHandler)
+	mux.HandleFunc("/webhooks/artifactory", webhooks.ArtifactHubHandler)
 	return mux
 }
