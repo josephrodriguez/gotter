@@ -6,7 +6,7 @@ ARG TARGETARCH
 WORKDIR /src
 
 # Install tools needed only at build time
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates git
 
 COPY go.mod ./
 RUN go mod download && go mod tidy
