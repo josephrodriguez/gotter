@@ -58,6 +58,8 @@ jobs:
         id: build
         uses: docker/build-push-action@v6
         with:
+          build-args: |
+            TARGETARCH=${{ split(matrix.build.platform, '/')[1] }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           labels: ${{ steps.metadata.outputs.labels }}
