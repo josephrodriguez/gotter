@@ -6,6 +6,7 @@ on:
       - main
       - feature/*
       - bugfix/*
+      - fix/*
       - release/*
   pull_request:
     branches: [ '*' ]
@@ -15,9 +16,14 @@ env:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        go_os: [linux]
+        go_arch: [amd64, arm64]    
     permissions:
       contents: read
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -31,7 +37,7 @@ jobs:
         run: go test -v
 
       - name: Build Go binary
-        run: go build
+        run: GOOS=${{ matrix.go_os }} GOARCH=${{ matrix.go_arch }} go build -ldflags="-s -w" -gcflags="all=-trimpath=${PWD}"
 
   dependabot:
     needs: [build]
