@@ -25,6 +25,7 @@ jobs:
             runner: ubuntu-latest
     runs-on: ${{ matrix.build.runner }} 
     permissions:
+      packages: write
       contents: read
     steps:
       - name: Checkout
