@@ -19,7 +19,7 @@ jobs:
         go_arch: [amd64, arm64]    
     permissions:
       contents: read
-    uses: josephrodriguez/github-workflow/.github/workflows/golang-build.yaml@c495e534030619f48537cad4ab29611e2ec03bb4
+    uses: josephrodriguez/github-workflow/.github/workflows/golang-build.yaml@3b10127e3ccd6021f7dfc0d35348aea71671fc98
     with:
       go_version: 1.24.10
       go_build_output_name: 'gotter'
@@ -27,7 +27,6 @@ jobs:
       go_build_gcflags: 'all=-trimpath=${PWD}'
       go_build_os: ${{ matrix.go_os }}
       go_build_arch: ${{ matrix.go_arch }}
-      go_test_enabled: true
       go_lint_enabled: false
       sonar_enabled: false
       sonar_project_key: 'my-org_my-project'
