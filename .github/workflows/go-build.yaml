@@ -22,7 +22,7 @@ jobs:
         go_arch: [amd64, arm64]    
     permissions:
       contents: read
-    uses: josephrodriguez/github-workflow/.github/workflows/golang/golang-build.yaml@main
+    uses: josephrodriguez/github-workflow/.github/workflows/golang-build.yaml@main
     with:
       go_version: 1.24.10
       go_build_ldflags: '-s -w -X main.Version=${{ github.ref_name }}'
