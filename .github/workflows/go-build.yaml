@@ -24,7 +24,7 @@ jobs:
       contents: read
     uses: josephrodriguez/github-workflow/.github/workflows/golang/golang-build.yaml@main
     with:
-      go_version: ${{ env.GO_VERSION }}
+      go_version: 1.24.10
       go_build_ldflags: '-s -w -X main.Version=${{ github.ref_name }}'
       go_build_gcflags: 'all=-trimpath=${PWD}'
       go_build_os: ${{ matrix.go_os }}
