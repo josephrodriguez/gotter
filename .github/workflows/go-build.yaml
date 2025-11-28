@@ -26,6 +26,7 @@ jobs:
       go_build_gcflags: 'all=-trimpath=${PWD}'
       go_build_os: ${{ matrix.go_os }}
       go_build_arch: ${{ matrix.go_arch }}
+      go_lint_enabled: false
       sonar_enabled: false
       sonar_project_key: 'my-org_my-project'
       slack_enabled: false
