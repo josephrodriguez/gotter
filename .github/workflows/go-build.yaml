@@ -19,7 +19,7 @@ jobs:
         go_arch: [amd64, arm64]    
     permissions:
       contents: read
-    uses: josephrodriguez/github-workflow/.github/workflows/golang-build.yaml@3b10127e3ccd6021f7dfc0d35348aea71671fc98
+    uses: josephrodriguez/github-workflow/.github/workflows/golang-build.yaml@95381328bc5ab2b43f62c149921fc017bd98ac57
     with:
       go_version: 1.24.10
       go_build_output_name: 'gotter'
