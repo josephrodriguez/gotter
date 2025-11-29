@@ -1,12 +1,12 @@
 FROM golang:1.25-alpine AS builder
 
-ARG TARGETOS=linux
-ARG TARGETARCH=arm64
+ARG TARGETOS
+ARG TARGETARCH
 
 WORKDIR /src
 
 # Install tools needed only at build time
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates git
 
 COPY go.mod ./
 RUN go mod download && go mod tidy
