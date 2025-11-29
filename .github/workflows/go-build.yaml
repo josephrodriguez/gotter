@@ -19,16 +19,19 @@ jobs:
         go_arch: [amd64, arm64]    
     permissions:
       contents: read
-    uses: josephrodriguez/github-workflow/.github/workflows/golang-build.yaml@95381328bc5ab2b43f62c149921fc017bd98ac57
+    uses: josephrodriguez/github-workflow/.github/workflows/golang-build.yaml@4cc4b79aae7c5186ddbc5b664a3725bbe89be320
     with:
       go_version: 1.24.10
-      go_build_output_name: 'gotter'
+      go_build_output_name: ${{ github.event.repository.name }}
       go_build_output_dir: 'dist/${{ matrix.go_os }}/${{ matrix.go_arch }}'
       go_build_ldflags: '-s -w -X main.Version=${{ github.ref_name }}'
       go_build_gcflags: 'all=-trimpath=${PWD}'
       go_build_os: ${{ matrix.go_os }}
       go_build_arch: ${{ matrix.go_arch }}
       go_lint_enabled: false
+      go_artifacts_enabled: true
+      go_artifacts_name: '${{ github.event.repository.name }}_${{ matrix.go_os }}_${{ matrix.go_arch }}.tar.gz'
+      go_test_enabled: true
       sonar_enabled: false
       sonar_project_key: 'my-org_my-project'
       slack_enabled: false
@@ -36,20 +39,6 @@ jobs:
     # secrets:
     #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     #   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}    
-    # steps:
-    #   - name: Checkout code
-    #     uses: actions/checkout@v5
-
-    #   - name: Set up Go
-    #     uses: actions/setup-go@v5
-    #     with:
-    #       go-version: ${{ env.GO_VERSION }}
-
-    #   - name: Run unit tests
-    #     run: go test -v
-
-    #   - name: Build Go binary
-    #     run: GOOS=${{ matrix.go_os }} GOARCH=${{ matrix.go_arch }} go build -ldflags="-s -w" -gcflags="all=-trimpath=${PWD}"
 
   dependabot:
     needs: [build]
