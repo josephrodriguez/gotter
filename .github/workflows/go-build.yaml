@@ -31,7 +31,6 @@ jobs:
       go_lint_enabled: false
       go_artifacts_enabled: true
       go_artifacts_name: '${{ github.event.repository.name }}_${{ matrix.go_os }}_${{ matrix.go_arch }}.tar.gz'
-      go_test_enabled: true
       sonar_enabled: false
       sonar_project_key: 'my-org_my-project'
       slack_enabled: false
