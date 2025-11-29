@@ -8,7 +8,7 @@ on:
       - fix/*
       - release/*
   pull_request:
-    branches: [ '*' ]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -32,13 +32,10 @@ jobs:
       go_lint_enabled: false
       go_artifacts_enabled: true
       go_artifacts_name: '${{ github.event.repository.name }}_${{ matrix.go_os }}_${{ matrix.go_arch }}.tar.gz'
-      sonar_enabled: false
-      sonar_project_key: 'my-org_my-project'
-      slack_enabled: false
-      slack_channel: '#deployments'
-    # secrets:
-    #   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}    
+      sonar_enabled: true
+      sonar_project_key: 'josephrodriguez_golang-starterkit'
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   dependabot:
     needs: [build]
