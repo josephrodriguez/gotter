@@ -7,12 +7,16 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=josephrodriguez_gotter&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=josephrodriguez_gotter)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=josephrodriguez_gotter&metric=security_rating)](https://sonarcloud.io/dashboard?id=josephrodriguez_gotter)
 
+---
+
 ![Gotter Logo](./docs/logo.png)
+
 
 Gotter keeps your GitOps repository up-to-date by automatically syncing Helm chart versions from different registries.
 
+------
 
-Configuration:
+## Configuration:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -20,13 +24,13 @@ Configuration:
 | `GOTTER_PORT` | Server port | `8080` |
 
 
-Supported Registries & Manifests
+## Supported Registries
 
 | Registry     | Supported Manifests | Integration Type | Notes |
 |--------------|---------------------|------------------|-------|
 | ArtifactHub  | Kustomize           | Webhook + API    | Detects Helm chart publishes and updates Kustomize manifests (patches kustomization YAML or patch files) |
 
-Roadmap
+## Roadmap
 
 - Add support for additional registries (ChartMuseum, Harbor, OCI registries) and manifest formats (Helm values, plain YAML) in future releases.
 
