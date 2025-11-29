@@ -32,7 +32,8 @@ jobs:
       go_lint_enabled: false
       go_artifacts_enabled: true
       go_artifacts_name: '${{ github.event.repository.name }}_${{ matrix.go_os }}_${{ matrix.go_arch }}.tar.gz'
-      sonar_enabled: true
+      sonar_analysis_enabled: true
+      sonar_cache_enabled: true
       sonar_project_key: 'josephrodriguez_golang-starterkit'
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
