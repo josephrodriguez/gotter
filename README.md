@@ -2,6 +2,10 @@
 
 [![CI](https://github.com/josephrodriguez/gotter/actions/workflows/go-build.yaml/badge.svg)](https://github.com/josephrodriguez/gotter/actions)
 [![Go Version](https://img.shields.io/badge/go-1.25%2B-blue?logo=go)](https://golang.org)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=josephrodriguez_gotter&metric=alert_status)](https://sonarcloud.io/dashboard?id=josephrodriguez_gotter)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=josephrodriguez_gotter&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=josephrodriguez_gotter)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=josephrodriguez_gotter&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=josephrodriguez_gotter)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=josephrodriguez_gotter&metric=security_rating)](https://sonarcloud.io/dashboard?id=josephrodriguez_gotter)
 
 ![Gotter Logo](./docs/logo.png)
 

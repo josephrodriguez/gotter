@@ -28,7 +28,8 @@ jobs:
       go_build_gcflags: 'all=-trimpath=${PWD}'
       go_build_os: ${{ matrix.go_os }}
       go_build_arch: ${{ matrix.go_arch }}
-      go_coverage_enabled: false
+      go_coverage_enabled: true
+      go_coverage_threshold: 0
       go_lint_enabled: false
       go_artifacts_enabled: true
       go_artifacts_name: '${{ github.event.repository.name }}_${{ matrix.go_os }}_${{ matrix.go_arch }}.tar.gz'
@@ -41,17 +42,6 @@ jobs:
   dependabot:
     needs: [build]
     permissions: write-all
-    runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}}
-    steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v2.4.0
-        with:
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
-          
-      - name: Enable auto-merge for Dependabot PRs
-        run: gh pr merge --auto --merge "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}          
+    uses: josephrodriguez/github-workflow/.github/workflows/dependabot-merge-pull-request.yaml@7a818785cd63b5999c62d9823a4d1bf900ccc9a8
+    secrets:
+      AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}         
