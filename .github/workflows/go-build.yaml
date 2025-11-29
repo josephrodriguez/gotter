@@ -23,6 +23,7 @@ jobs:
     with:
       go_version: 1.24.10
       go_build_output_name: 'gotter'
+      go_build_output_dir: 'dist/${{ matrix.go_os }}/${{ matrix.go_arch }}'
       go_build_ldflags: '-s -w -X main.Version=${{ github.ref_name }}'
       go_build_gcflags: 'all=-trimpath=${PWD}'
       go_build_os: ${{ matrix.go_os }}
