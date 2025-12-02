@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -41,6 +42,10 @@ type WebhookRepository struct {
 	OrganizationDisplayName string `json:"organization_display_name"`
 }
 
+type ErrorResponse struct {
+	Message string `json:"message"`
+}
+
 type Client struct {
 	BaseURL    string
 	HTTPClient *http.Client
@@ -57,4 +62,17 @@ func NewClient(baseUrl, apiKey, apiSecret string) Client {
 			Timeout: 30 * time.Second,
 		},
 	}
+}
+
+func (c *Client) do(req *http.Request) (*http.Response, error) {
+	req.Header.Set("X-API-KEY", c.ApiKey)
+	req.Header.Set("X-API-SECRET", c.ApiSecret)
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to execute request: %w", err)
+	}
+
+	return resp, nil
 }
