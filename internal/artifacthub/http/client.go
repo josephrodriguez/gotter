@@ -1,7 +1,9 @@
 package http
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 )
@@ -75,4 +77,58 @@ func (c *Client) do(req *http.Request) (*http.Response, error) {
 	}
 
 	return resp, nil
+}
+
+func (c *Client) handleResponse(resp *http.Response, out interface{}) error {
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("failed to read response body: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		var errResp ErrorResponse
+		if err := json.Unmarshal(body, &errResp); err != nil {
+			return fmt.Errorf("request failed with status %d:%s", resp.StatusCode, errResp.Message)
+		}
+		return fmt.Errorf("request failed with status %d:%s", resp.StatusCode, string(body))
+	}
+
+	if len(body) > 0 && out != nil {
+		if err := json.Unmarshal(body, &out); err != nil {
+			return fmt.Errorf("failed to unmarshal response body: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (c *Client) getWebhooks(path string) ([]WebhookResponse, error) {
+	url := fmt.Sprintf("%s/%s", c.BaseURL, path)
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	resp, err := c.do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	var out []WebhookResponse
+	if err := c.handleResponse(resp, &out); err != nil {
+		return nil, err
+	}
+
+	return out, nil
+}
+
+func (c *Client) GetUserWebhooks() ([]WebhookResponse, error) {
+	return c.getWebhooks("api/v1/webhooks/user")
+}
+
+func (c *Client) GetOrganizationWebhooks(name string) ([]WebhookResponse, error) {
+	path := fmt.Sprintf("api/v1/webhooks/org/%s", name)
+	return c.getWebhooks(path)
 }
