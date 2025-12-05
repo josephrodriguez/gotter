@@ -124,6 +124,27 @@ func (c *Client) getWebhooks(path string) ([]WebhookResponse, error) {
 	return out, nil
 }
 
+func (c *Client) getWebhook(path string) (WebhookResponse, error) {
+	url := fmt.Sprintf("%s/%s", c.BaseURL, path)
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return WebhookResponse{}, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	resp, err := c.do(req)
+	if err != nil {
+		return WebhookResponse{}, err
+	}
+
+	var out WebhookResponse
+	if err := c.handleResponse(resp, &out); err != nil {
+		return WebhookResponse{}, err
+	}
+
+	return out, nil
+}
+
 func (c *Client) GetUserWebhooks() ([]WebhookResponse, error) {
 	return c.getWebhooks("api/v1/webhooks/user")
 }
@@ -131,4 +152,9 @@ func (c *Client) GetUserWebhooks() ([]WebhookResponse, error) {
 func (c *Client) GetOrganizationWebhooks(name string) ([]WebhookResponse, error) {
 	path := fmt.Sprintf("api/v1/webhooks/org/%s", name)
 	return c.getWebhooks(path)
+}
+
+func (c *Client) GetUserWebhook(webhookId string) (WebhookResponse, error) {
+	path := fmt.Sprintf("/api/v1/webhooks/user/%s", webhookId)
+	return c.getWebhook(path)
 }
