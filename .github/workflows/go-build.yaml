@@ -42,6 +42,6 @@ jobs:
   dependabot:
     needs: [build]
     permissions: write-all
-    uses: josephrodriguez/github-workflow/.github/workflows/dependabot-merge-pull-request.yaml@7a818785cd63b5999c62d9823a4d1bf900ccc9a8
+    uses: josephrodriguez/github-workflow/.github/workflows/dependabot-merge-pull-request.yaml@7056cf1ec83b1b5e4a0ca9c7e19da89d1c882c08
     secrets:
       AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}         
